@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { HomePage } from './../home/home';
 import { Login } from './../login/login';
 
 import { Auth } from '../../providers/auth';
@@ -29,9 +30,12 @@ export class Register {
       console.log('register success', res)
       this.as.login(email, password).then(res => {
         console.log('login success', res)
-        this.as.createProfile(res.uid, first_name, last_name, email).then(res => {
+        this.as.createProfile(res.uid, first_name || '', last_name || '', email).then(res => {
           console.log('create profile success', res)
-          this.hps.dismissLoading();
+          this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }).then(err => {
+            if (res) return;
+            console.log('create profile success set home to root err', res);
+          });
           this.hps.presentToast('Register Successful!', 'create profile success');
         }).catch(err => {
           console.log('create profile err', err);

@@ -4,15 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { CustomFormsModule } from 'ng2-validation'
+import { MomentModule } from 'angular2-moment';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { Login } from '../pages/login/login';
-import { Register } from '../pages/register/register';
+
+import { RegisterModule } from './../pages/register/register.module';
+import { LoginModule } from './../pages/login/login.module';
 
 import { Auth } from '../providers/auth';
 import { Helper } from '../providers/helper';
+import { Todos } from '../providers/todos';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,31 +36,28 @@ const firebaseAuthConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage,
-    Login,
-    Register
+    HomePage
   ],
   imports: [
     BrowserModule,
     FormsModule,
     IonicModule.forRoot(MyApp),
+    LoginModule,
+    RegisterModule,
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
-    CustomFormsModule
+    CustomFormsModule,
+    MomentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage,
-    Login,
-    Register
+    HomePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    Auth, Helper
+    Auth, Helper, Todos
   ]
 })
 export class AppModule { }

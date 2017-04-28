@@ -18,7 +18,11 @@ export class Login {
 
   ionViewDidLoad() {
     this.hps.presentLoading('login set home to root');
-    this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
+    this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }).then(res => {
+      if (res) return;
+      console.log('login set home to root err', res)
+      this.hps.dismissLoading();
+    });
   }
 
   register() {
@@ -31,8 +35,10 @@ export class Login {
     this.hps.presentLoading('login');
     this.as.login(email, password).then(res => {
       console.log('login success', res)
-      this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
-      this.hps.dismissLoading();
+      this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }).then(err => {
+        if (res) return;
+        console.log('login success set home to root err', res);
+      });
       this.hps.presentToast('Login Successful!', 'login success');
     }).catch(err => {
       console.log('login err', err);

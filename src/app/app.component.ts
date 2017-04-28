@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, NavController } from 'ionic-angular';
+import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { Login } from '../pages/login/login';
 import { Register } from '../pages/register/register';
 
 import { Auth } from './../providers/auth';
+import { Todos } from './../providers/todos';
 import { Helper } from './../providers/helper';
 
 @Component({
@@ -23,13 +23,12 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any, auth: boolean }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private as: Auth, private hps: Helper) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private as: Auth, private ts: Todos, private hps: Helper) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, auth: true },
-      { title: 'List', component: ListPage, auth: true },
       { title: 'Login', component: Login, auth: false },
       { title: 'Register', component: Register, auth: false }
     ];
@@ -56,6 +55,7 @@ export class MyApp {
   }
 
   logout() {
+    this.ts.unsubscribeTodo();
     this.as.logout().then(res => {
       console.log('logout success', res)
       this.nav.setRoot(Login, {}, { animate: true, direction: 'forward' })

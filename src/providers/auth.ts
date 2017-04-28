@@ -1,10 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFire } from 'angularfire2';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class Auth {
 
-  constructor(private af: AngularFire) { }
+  user$: BehaviorSubject<{ uid: string }> = new BehaviorSubject({ uid: '' });
+
+  constructor(private af: AngularFire) {
+    this.af.auth.subscribe(state => {
+      state && state.uid ?
+        this.user$.next({ uid: state.uid }) :
+        this.user$.next({ uid: '' })
+    })
+  }
 
   isLoggedin() {
     return this.af.auth.asObservable();

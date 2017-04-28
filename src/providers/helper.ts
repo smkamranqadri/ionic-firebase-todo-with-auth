@@ -27,6 +27,8 @@ export class Helper {
   }
 
   dismissLoading() {
+    console.log('loader', this.loading.isLast());
+    console.log('loading', this.loading);
     if (this.loading) this.loading.dismissAll();
   }
 }

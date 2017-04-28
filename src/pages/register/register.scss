@@ -1,0 +1,25 @@
+page-register {
+
+  .nopadding {
+    padding: 0px;
+  }
+
+  .text-danger {
+    color: red;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .item-md.item-block .item-inner {
+    padding: 0px;
+  }
+
+  .item-label-stacked .text-input-md, .item-label-floating .text-input-md {
+    width: 100%;
+    margin-right: 0px;
+  }
+
+}

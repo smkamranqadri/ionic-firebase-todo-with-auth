@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <form #loginForm="ngForm" (ngSubmit)="login(loginForm.valid, loginForm.value)" novalidate>
+    <ion-item class="nopadding">
+      <ion-label floating>Email</ion-label>
+      <ion-input type="email" #e="ngModel" [(ngModel)]="email" name="email" email required></ion-input>
+    </ion-item>
+    <small class="text-danger" *ngIf="e.invalid && loginForm._submitted">Email is required.</small>
+    <br />
+    <small class="text-danger" *ngIf="e.errors?.email && loginForm._submitted">Email should be like john@doe.com.</small>
+    <ion-item class="nopadding">
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" #pw="ngModel" [(ngModel)]="password" name="password" [minlength]="6" required></ion-input>
+    </ion-item>
+    <small class="text-danger" *ngIf="pw.invalid && loginForm._submitted">Password is required and should be 6 charactor long.</small>
+    <br />
+    <div class="buttons">
+      <button ion-button clear type="button" (click)="register()">Don't have account?</button>
+      <button ion-button secondary type="submit">Login</button>
+    </div>
+  </form>
+
+</ion-content>
